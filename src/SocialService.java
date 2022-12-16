@@ -6,7 +6,6 @@ public class SocialService {
     public static List<User> all = new ArrayList<>(); /// ArrayList<User> all ; ALL Users are Stored here;
     static Scanner scan = new Scanner(System.in);
     static int id = -1;
-    static List<Integer> postNum = new ArrayList<>();
     static PriorityQueue<Post> topWhatever = new PriorityQueue<>(new ComparatorHomeMade());
 
     public static void main(String[] args) {
@@ -414,7 +413,7 @@ public class SocialService {
         for (int i = 0; all.get(candidateId).posts.size() > i; i++) {
 
             System.out.println();
-            System.out.println("**************POST " + postNum.get(i) + "********************");
+            System.out.println("**************POST " + i + "********************");
             System.out.println(all.get(candidateId).posts.get(i).printPost());
             System.out.println("****" + all.get(candidateId).posts.get(i).likes.size() + "-LIKES***********END*******************");
             System.out.println("****************************************");
@@ -497,7 +496,6 @@ public class SocialService {
         // List<Integer> likes = new ArrayList<>();
         MyArrayList<Integer> likes = new MyArrayList<>();
         for (int i = 0; i < posts.size(); i++) {
-            postNum.add(i + 1);
             likes.add(posts.get(i).likes.size());
         }
         int n = likes.size();
@@ -510,7 +508,6 @@ public class SocialService {
             int temp = likes.get(min);
             likes.set(min, likes.get(i));
             likes.set(i, temp);
-            Collections.swap(postNum, min, i);
             Collections.swap(posts, min, i);
         }
         return posts;
