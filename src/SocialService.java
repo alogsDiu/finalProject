@@ -1,3 +1,5 @@
+import hashTableImplementation.MyHashNode;
+import hashTableImplementation.MyMap;
 import myArrayListImplementation.MyArrayList;
 
 import java.util.*;
@@ -410,8 +412,10 @@ public class SocialService {
             subscribe(candidateId);
         }
         all.get(candidateId).posts = (ArrayList<Post>) insertSort(all.get(candidateId).posts);
+        System.out.println("-------------");
+        printLikes(candidateId, all.get(candidateId).posts);
+        System.out.println("--------------");
         for (int i = 0; all.get(candidateId).posts.size() > i; i++) {
-
             System.out.println();
             System.out.println("**************POST " + i + "********************");
             System.out.println(all.get(candidateId).posts.get(i).printPost());
@@ -493,7 +497,6 @@ public class SocialService {
     }
 
     public static List<Post> insertSort(List<Post> posts) {
-        // List<Integer> likes = new ArrayList<>();
         MyArrayList<Integer> likes = new MyArrayList<>();
         for (int i = 0; i < posts.size(); i++) {
             likes.add(posts.get(i).likes.size());
@@ -512,6 +515,15 @@ public class SocialService {
         }
         return posts;
     }
+    public static void printLikes(int candidateId, List<Post> posts){
+       MyMap<String, Integer> myMap = new MyMap<>();
+       for(int i = 0; i < all.get(candidateId).posts.size(); i++){
+           myMap.add(posts.get(i).title, posts.get(i).likes.size());
+       }
+       for(int i = 0; i < myMap.size(); i++){
+           System.out.print( posts.get(i).title + " | " + myMap.get(posts.get(i).title));
+       }
+    }
 }
 
 class ComparatorHomeMade implements Comparator<Post>{
@@ -524,3 +536,4 @@ class ComparatorHomeMade implements Comparator<Post>{
             return 1;
     }
 }
+
