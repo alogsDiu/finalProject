@@ -6,7 +6,7 @@ import org.w3c.dom.ls.LSOutput;
 import java.util.*;
 
 public class SocialService {
-    public static List<User> all = new ArrayList<>(); /// ArrayList<User> all ; ALL Users are Stored here;
+    public static MyArrayList<User> all = new MyArrayList<>(); /// ArrayList<User> all ; ALL Users are Stored here;
     static Scanner scan = new Scanner(System.in);
     static int id = -1;
     static PriorityQueue<Post> topWhatever = new PriorityQueue<>(new ComparatorHomeMade());
@@ -95,7 +95,8 @@ public class SocialService {
         System.out.println("3 - People who you are subsctibed to...");
         System.out.println("4 - Create a Post");
         System.out.println("5 - Hottest posts A.S.A.P ");
-        System.out.println("6  - LogOut");
+        System.out.println("6 - Most Similar User ");
+        System.out.println("7  - LogOut");
         System.out.println("-----------------------------------");
         int resp = 0;
         try {
@@ -124,11 +125,44 @@ public class SocialService {
                 hottestPosts();
                 break;
             case 6:
+                mostSimilar();
+                break;
+            case 7:
                 confirmation();
                 break;
             default:
                 loged();
                 break;
+        }
+    }
+    public static void mostSimilar(){
+        User cur = all.get(id);
+        int ind = 0;
+        int maxSimilarities = 0;
+        int tempSimililarities ;
+
+        for(int i =0;i<cur.mySubs.size();i++){
+            tempSimililarities=0;
+            for(int j=0; j<cur.mySubs.get(i).mySubs.size();j++){
+                for(int k = 0; k<cur.mySubs.size();k++){
+                    if(cur.mySubs.get(i).mySubs.get(j)==cur.mySubs.get(k)){
+                        tempSimililarities++;
+                    }
+                }
+            }
+            if(tempSimililarities>maxSimilarities){
+                ind=i;
+                maxSimilarities=tempSimililarities;
+            }
+        }
+        if(cur.mySubs.size()==0){
+            loged();
+            return ;
+        }
+        for(int i =0;i<all.size();i++){
+            if(all.get(i)==cur.mySubs.get(ind)){
+                subscribe(i);
+            }
         }
     }
 
@@ -515,15 +549,15 @@ public class SocialService {
         return posts;
     }
     public static String printAllPosts(int candidateId, List<Post> posts){
-       MyMap<String, Integer> myMap = new MyMap<>();
-       String hashTable = "";
-       for(int i = 0; i < all.get(candidateId).posts.size(); i++){
-           myMap.add(posts.get(i).title, posts.get(i).likes.size());
-       }
-       for(int i = 0; i < myMap.size(); i++){
-           hashTable +=  posts.get(i).title + " | " + myMap.get(posts.get(i).title) + "\n";
-       }
-       return hashTable;
+        MyMap<String, Integer> myMap = new MyMap<>();
+        String hashTable = "";
+        for(int i = 0; i < all.get(candidateId).posts.size(); i++){
+            myMap.add(posts.get(i).title, posts.get(i).likes.size());
+        }
+        for(int i = 0; i < myMap.size(); i++){
+            hashTable +=  posts.get(i).title + " | " + myMap.get(posts.get(i).title) + "\n";
+        }
+        return hashTable;
     }
 }
 
