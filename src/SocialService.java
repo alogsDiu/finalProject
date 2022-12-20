@@ -534,7 +534,7 @@ class ComparatorHomeMade implements Comparator<Post>{
         else if(one.likes.size()>two.likes.size())
             return -1;
         else
-            return 1;
+            return 1 ;
     }
 }
 
