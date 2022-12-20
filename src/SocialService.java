@@ -1,5 +1,7 @@
+import hashTableImplementation.MyHashNode;
 import hashTableImplementation.MyMap;
 import myArrayListImplementation.MyArrayList;
+import org.w3c.dom.ls.LSOutput;
 
 import java.util.*;
 
@@ -33,7 +35,8 @@ public class SocialService {
             createUser();
         } else if (ans == 2) {
             logIn();
-        } else {
+        }
+        else {
             return;
         }
     }
@@ -408,7 +411,8 @@ public class SocialService {
             System.out.println();
             subscribe(candidateId);
         }
-        System.out.println(printLikes(candidateId, all.get(candidateId).posts));
+        System.out.println("Title | Likes" );
+        System.out.println(printAllPosts(candidateId, all.get(candidateId).posts));
         all.get(candidateId).posts = (ArrayList<Post>) insertSort(all.get(candidateId).posts);
         for (int i = 0; all.get(candidateId).posts.size() > i; i++) {
             System.out.println();
@@ -510,7 +514,7 @@ public class SocialService {
         }
         return posts;
     }
-    public static String printLikes(int candidateId, List<Post> posts){
+    public static String printAllPosts(int candidateId, List<Post> posts){
        MyMap<String, Integer> myMap = new MyMap<>();
        String hashTable = "";
        for(int i = 0; i < all.get(candidateId).posts.size(); i++){
@@ -533,3 +537,4 @@ class ComparatorHomeMade implements Comparator<Post>{
             return 1;
     }
 }
+
