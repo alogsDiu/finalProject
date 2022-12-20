@@ -1,4 +1,3 @@
-import hashTableImplementation.MyHashNode;
 import hashTableImplementation.MyMap;
 import myArrayListImplementation.MyArrayList;
 
@@ -400,8 +399,6 @@ public class SocialService {
     }
 
     public static void seePosts(int candidateId) {
-        System.out.println();
-        System.out.println("--------------------------------------------------------");
         System.out.println("Posts of: " + all.get(candidateId).getName() + "------------");
         if (all.get(candidateId).posts.size() == 0) {
             System.out.println();
@@ -411,13 +408,11 @@ public class SocialService {
             System.out.println();
             subscribe(candidateId);
         }
+        System.out.println(printLikes(candidateId, all.get(candidateId).posts));
         all.get(candidateId).posts = (ArrayList<Post>) insertSort(all.get(candidateId).posts);
-        System.out.println("-------------");
-        printLikes(candidateId, all.get(candidateId).posts);
-        System.out.println("--------------");
         for (int i = 0; all.get(candidateId).posts.size() > i; i++) {
             System.out.println();
-            System.out.println("**************POST " + i + "********************");
+            System.out.println("**************POST " + (i + 1) + "********************");
             System.out.println(all.get(candidateId).posts.get(i).printPost());
             System.out.println("****" + all.get(candidateId).posts.get(i).likes.size() + "-LIKES***********END*******************");
             System.out.println("****************************************");
@@ -515,14 +510,16 @@ public class SocialService {
         }
         return posts;
     }
-    public static void printLikes(int candidateId, List<Post> posts){
+    public static String printLikes(int candidateId, List<Post> posts){
        MyMap<String, Integer> myMap = new MyMap<>();
+       String hashTable = "";
        for(int i = 0; i < all.get(candidateId).posts.size(); i++){
            myMap.add(posts.get(i).title, posts.get(i).likes.size());
        }
        for(int i = 0; i < myMap.size(); i++){
-           System.out.print( posts.get(i).title + " | " + myMap.get(posts.get(i).title));
+           hashTable +=  posts.get(i).title + " | " + myMap.get(posts.get(i).title) + "\n";
        }
+       return hashTable;
     }
 }
 
@@ -536,4 +533,3 @@ class ComparatorHomeMade implements Comparator<Post>{
             return 1;
     }
 }
-
